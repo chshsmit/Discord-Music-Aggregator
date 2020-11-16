@@ -3,8 +3,10 @@ DiscordBot.py
 @author Christopher Smith
 @description 
 @created 2020-11-14T11:51:16.918Z-08:00
-@last-modified 2020-11-16T12:26:02.930Z-08:00
+@last-modified 2020-11-16T12:27:39.156Z-08:00
 """
+
+# -------------------------------------------------------------------
 
 import os
 
@@ -14,6 +16,8 @@ from dotenv import load_dotenv
 from ApiConnector import ApiConnector
 from utils import get_all_urls, get_video_id, is_youtube_url
 
+# -------------------------------------------------------------------
+
 
 class DiscordBot(discord.Client):
     def __init__(self, guild, token):
@@ -21,6 +25,8 @@ class DiscordBot(discord.Client):
         self._api_connector = ApiConnector()
         self._guild = guild
         self._token = token
+
+    # -------------------------------------------------------------------
 
     def get_all_video_info(self, url):
         video_id = get_video_id(url)
@@ -30,6 +36,8 @@ class DiscordBot(discord.Client):
             return None
 
         return {"link": url, "title": video_name}
+
+    # -------------------------------------------------------------------
 
     async def on_ready(self):
         for guild in self.guilds:
@@ -70,6 +78,8 @@ class DiscordBot(discord.Client):
         else:
             print("There was nothing to add on startup")
 
+    # -------------------------------------------------------------------
+
     async def on_message(self, message):
         if message.author == self.user or message.channel.name != "bangerz":
             return
@@ -95,6 +105,8 @@ class DiscordBot(discord.Client):
         message = f"I added {len(all_songs)} {song} to the sheet"
         print(message)
         await message.channel.send(message)
+
+    # -------------------------------------------------------------------
 
     def run_bot(self):
         self.run(self._token)

@@ -3,12 +3,14 @@ utils.py
 @author Christopher Smith
 @description Utility functions
 @created 2020-11-15T14:56:05.531Z-08:00
-@last-modified 2020-11-15T15:15:32.916Z-08:00
+@last-modified 2020-11-16T12:27:08.115Z-08:00
 """
 
 from re import findall as re_findall
 from re import search as re_search
 from urllib.parse import parse_qs, urlparse
+
+# -------------------------------------------------------------------
 
 
 def get_all_urls(message_content: str) -> list:
@@ -27,6 +29,9 @@ def get_all_urls(message_content: str) -> list:
     return re_findall(URL_REGEX, message_content)
 
 
+# -------------------------------------------------------------------
+
+
 def is_youtube_url(url: str) -> bool:
     """
     Description:
@@ -41,6 +46,9 @@ def is_youtube_url(url: str) -> bool:
 
     YOUTUBE_REGEX = "^(https?\:\/\/)?((www\.)?youtube\.com|youtu\.?be)\/.+$"
     return re_search(YOUTUBE_REGEX, url)
+
+
+# -------------------------------------------------------------------
 
 
 def get_video_id(youtube_url: str) -> str:
