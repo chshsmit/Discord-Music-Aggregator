@@ -57,6 +57,7 @@ async def on_ready():
 
     current_links_in_sheet = api_connector.get_all_current_links_in_sheet()
 
+    # TODO: Add filter here to remove all Nones
     need_to_add = []
     for url in current_urls:
         if url not in current_links_in_sheet:
