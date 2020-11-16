@@ -6,8 +6,8 @@ import discord
 import requests
 from dotenv import load_dotenv
 
+from ApiConnector import ApiConnector
 from utils import get_all_urls, get_video_id, is_youtube_url
-from YoutubeApiConnector import YoutubeApiConnector
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -50,7 +50,7 @@ async def on_message(message):
     if message.author == client.user or message.channel.name != "bot-test":
         return
 
-    youtube_api_connector = YoutubeApiConnector()
+    api_connector = ApiConnector()
 
     urls_in_message = get_all_urls(message_content=message.content)
     youtube_ids = [get_video_id(url) for url in urls_in_message if is_youtube_url(url)]
@@ -59,9 +59,7 @@ async def on_message(message):
         await message.channel.send("No Youtube URLs were provided")
         return
 
-    video_names = [
-        youtube_api_connector.get_video_name(video_id) for video_id in youtube_ids
-    ]
+    video_names = [api_connector.get_video_name(video_id) for video_id in youtube_ids]
 
     # count = 0
     # for url in urls_in_message:
