@@ -3,9 +3,10 @@ ApiConnector.py
 @author Christopher Smith
 @description Class to make requests to needed apis (YouTube, GoogleSheets)
 @created 2020-11-15T15:04:31.896Z-08:00
-@last-modified 2020-11-15T18:17:22.708Z-08:00
+@last-modified 2020-11-15T18:58:17.931Z-08:00
 """
 
+import json
 from os import getenv
 
 import gspread
@@ -21,6 +22,9 @@ class ApiConnector:
             "https://spreadsheets.google.com/feeds",
             "https://www.googleapis.com/auth/drive",
         ]
+        self._sheets_creds = ServiceAccountCredentials.from_json_keyfile_name(
+            "credentials.json", self._scope
+        )
 
     # ----------------------------------------------------------------------
     # YOUTUBE
@@ -43,24 +47,36 @@ class ApiConnector:
 
         video_data = response.json()
 
-        return video_data["items"][0]["snippet"]["title"]
+        if len(video_data["items"]) != 0:
+            return video_data["items"][0]["snippet"]["title"]
+
+        else:
+            return None
 
     # ----------------------------------------------------------------------
     # Sheets
     # ----------------------------------------------------------------------
 
     def _next_available_row(self, sheet):
-        str_list = list(filter(None, worksheet.col_values(1)))
+        str_list = list(filter(None, sheet.col_values(1)))
         return len(str_list) + 1
 
     def insert_new_songs(self, songs):
-        creds = ServiceAccountCredentials.from_json_keyfile_name(
-            "credentials.json", self._scope
-        )
-        client = gspread.authorize(creds)
+        client = gspread.authorize(self._sheets_creds)
 
         sheet = client.open("Music Aggregator").sheet1
 
-        rows = [[song["link"], song["title"]] for song in songs]
+        with open("output.json", "w") as out:
+            json.dump(songs, out, indent=4)
+
+        rows = [[song["link"], song["title"]] for song in songs if song != None]
 
         sheet.insert_rows(rows, self._next_available_row(sheet))
+
+    def get_all_current_links_in_sheet(self):
+        client = gspread.authorize(self._sheets_creds)
+        sheet = client.open("Music Aggregator").sheet1
+
+        all_links = [song["LINK"] for song in sheet.get_all_records()]
+
+        return all_links
