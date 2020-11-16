@@ -3,7 +3,7 @@ DiscordBot.py
 @author Christopher Smith
 @description 
 @created 2020-11-14T11:51:16.918Z-08:00
-@last-modified 2020-11-16T12:27:39.156Z-08:00
+@last-modified 2020-11-16T12:32:38.447Z-08:00
 """
 
 # -------------------------------------------------------------------
@@ -29,6 +29,18 @@ class DiscordBot(discord.Client):
     # -------------------------------------------------------------------
 
     def get_all_video_info(self, url):
+        """
+        Description:
+            Getting the information for a YouTube video, returns the link and title
+
+        Args:
+            url (str): The url of the YouTube video
+
+        Returns:
+            [dict]: A dictionary containing the link and title of the provided url
+                Example: {"link": "examplelink.com", "title": "Example Video Title"}
+        """
+
         video_id = get_video_id(url)
         video_name = self._api_connector.get_video_name(video_id)
 
@@ -40,6 +52,11 @@ class DiscordBot(discord.Client):
     # -------------------------------------------------------------------
 
     async def on_ready(self):
+        """
+        Description:
+            Always runs when the bot first starts
+        """
+
         for guild in self.guilds:
             if guild.name == self._guild:
                 break
@@ -80,7 +97,16 @@ class DiscordBot(discord.Client):
 
     # -------------------------------------------------------------------
 
-    async def on_message(self, message):
+    async def on_message(self, message: discord.Message) -> None:
+        """
+        Description:
+            This will run whenever a message is sent in the "bangerz" channel. It
+            parses the message for any YouTube urls and adds them to the google sheet
+            where all of the songs are being aggregated
+
+        Args:
+            message (discord.Message): The discord message that was sent
+        """
         if message.author == self.user or message.channel.name != "bangerz":
             return
 
@@ -91,7 +117,6 @@ class DiscordBot(discord.Client):
         youtube_ids = [get_video_id(url) for url in youtube_urls]
 
         if len(youtube_urls) == 0:
-            await message.channel.send("No Youtube URLs were provided")
             return
 
         all_songs = [self.get_all_video_info(url) for url in youtube_urls]
@@ -109,4 +134,9 @@ class DiscordBot(discord.Client):
     # -------------------------------------------------------------------
 
     def run_bot(self):
+        """
+        Description:
+            Running the bot
+        """
+
         self.run(self._token)
