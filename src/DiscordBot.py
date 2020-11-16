@@ -3,7 +3,7 @@ DiscordBot.py
 @author Christopher Smith
 @description 
 @created 2020-11-14T11:51:16.918Z-08:00
-@last-modified 2020-11-16T12:33:37.979Z-08:00
+@last-modified 2020-11-16T13:08:11.002Z-08:00
 """
 
 # -------------------------------------------------------------------
@@ -127,9 +127,9 @@ class DiscordBot(discord.Client):
 
         song = "song" if len(all_songs) == 1 else "songs"
 
-        message = f"I added {len(all_songs)} {song} to the sheet"
-        print(message)
-        await message.channel.send(message)
+        message_to_send = f"I added {len(all_songs)} {song} to the sheet"
+        print(message_to_send)
+        await message.channel.send(message_to_send)
 
     # -------------------------------------------------------------------
 
