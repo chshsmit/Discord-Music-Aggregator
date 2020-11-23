@@ -7,9 +7,24 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: ls
-      - run: echo "Building image"
-      - run: docker build -t chshsmit/discord-music:latest .
-      - run: echo "Authenticating with Docker Hub"
-      - run: docker login --username chshsmit --password $DOCKERHUB_PASSWORD
-      - run: docker push chshsmit/discord-music:latest
+      - add_ssh_keys
+
+      - run:
+        name: Connect to VPS
+        command: ssh root@108.61.193.108
+
+      - run:
+        name: List
+        command: ls
+
+      # - run:
+      #   name: Building Image
+      #   command: docker build -t chshsmit/discord-music:latest .
+
+      # - run:
+      #   name: Authenticate with Docker Hub
+      #   command: docker login --username chshsmit --password $DOCKERHUB_PASSWORD
+
+      # - run:
+      #   name: Push Image
+      #   command: docker push chshsmit/discord-music:latest
