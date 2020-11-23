@@ -15,7 +15,7 @@ jobs:
 
       - run: docker push chshsmit/discord-music:latest
 
-      - run: ssh-keyscan -H root@108.61.193.108 >> ~/.ssh/known_hosts
+      - run: ssh-keyscan -H 108.61.193.108 >> ~/.ssh/known_hosts
 
       - run: ssh root@108.61.193.108
 
