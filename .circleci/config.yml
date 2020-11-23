@@ -15,5 +15,5 @@ jobs:
 
       - run: docker push chshsmit/discord-music:latest
 
-      - run: ssh root@108.61.193.108 << 'ENDSSH'
+      - run: ssh root@108.61.193.108
 
