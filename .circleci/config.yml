@@ -7,6 +7,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - add_ssh_keys
 
       - run:
         name: Building Image
@@ -19,3 +20,8 @@ jobs:
       - run:
         name: Push Image
         command: docker push chshsmit/discord-music:latest
+
+      - run:
+        name: Connect to VPS
+        command: ssh root@108.61.193.108 << 'ENDSSH'
+
