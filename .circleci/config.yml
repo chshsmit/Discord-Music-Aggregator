@@ -1,10 +1,6 @@
 version: 2.0
 jobs:
   build:
-    filters:
-      branches:
-        only:
-          - develop
     working_directory: /app
     docker:
       - image: docker:17.05.0-ce-git
@@ -27,5 +23,4 @@ jobs:
           docker pull chshsmit/discord-music:latest
           docker stop discord-music
           docker rm discord-music
-          docker run --name discord-music -d chshsmit/discord-music:latest
           ENDSSH
