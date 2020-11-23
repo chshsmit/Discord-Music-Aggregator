@@ -1,9 +1,10 @@
 version: 2.1
 jobs:
   build:
+    working_directory: /app
     docker:
-      - image: cimg/node:14.10.1
-
+      - image: docker:17.05.0-ce-git
     steps:
       - checkout
-      - run: echo "hello world"
+      - setup_remote_docker
+      - run: echo "Building image"
