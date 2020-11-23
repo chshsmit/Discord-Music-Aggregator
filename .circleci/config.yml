@@ -13,3 +13,4 @@ jobs:
       - run: ls
       - run: echo "Building image"
       - run: docker build -t chshsmit/discord-music:latest .
+      - run: docker push chshsmit/discord-music:latest
