@@ -18,7 +18,7 @@ jobs:
       - run: ssh-keyscan -H 108.61.193.108 >> ~/.ssh/known_hosts
 
       - run: |
-          ssh root@108.61.193.108 << 'ENDSSH'
+          ssh root@108.61.193.108 \\<< 'ENDSSH'
           docker login --username chshsmit --password $DOCKERHUB_PASSWORD
           docker pull chshsmit/discord-music
           ENDSSH
