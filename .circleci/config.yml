@@ -4,6 +4,9 @@ jobs:
     working_directory: /app
     docker:
       - image: docker:17.05.0-ce-git
+        auth:
+          username: chshsmit
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - setup_remote_docker
