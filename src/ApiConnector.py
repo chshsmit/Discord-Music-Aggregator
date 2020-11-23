@@ -3,16 +3,19 @@ ApiConnector.py
 @author Christopher Smith
 @description Class to make requests to needed apis (YouTube, GoogleSheets)
 @created 2020-11-15T15:04:31.896Z-08:00
-@last-modified 2020-11-23T12:09:27.130Z-08:00
+@last-modified 2020-11-23T13:56:54.753Z-08:00
 """
 
 import base64
 import json
+import logging
 from os import getenv
 
 import gspread
 import requests
 from oauth2client.service_account import ServiceAccountCredentials
+
+logger = logging.getLogger(__name__)
 
 
 class ApiConnector:
@@ -30,6 +33,7 @@ class ApiConnector:
         creds_bytes = base64.b64decode(base64_creds_bytes)
         creds = creds_bytes.decode("ascii")
         creds = creds.replace("'", '"')
+        logger.info(creds)
         cred_dict = json.loads(creds)
 
         with open("creds.json", "w") as file:
