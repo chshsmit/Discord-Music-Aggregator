@@ -7,7 +7,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - add_ssh_keys
 
       - run:
         name: Building Image
