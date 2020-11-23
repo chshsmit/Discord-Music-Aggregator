@@ -4,13 +4,12 @@ jobs:
     working_directory: /app
     docker:
       - image: docker:17.05.0-ce-git
-        auth:
-          username: chshsmit
-          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - setup_remote_docker
       - run: ls
       - run: echo "Building image"
       - run: docker build -t chshsmit/discord-music:latest .
+      - run: echo "Authenticating with Docker Hub"
+      - run: docker login --username chshsmit --password $DOCKERHUB_PASSWORD
       - run: docker push chshsmit/discord-music:latest
