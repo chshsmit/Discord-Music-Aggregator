@@ -3,5 +3,7 @@ env/**
 test.py
 output.json
 __pycache__/**
+**/__pycache__/**
 credentials.json
+creds.json
 *.pickle

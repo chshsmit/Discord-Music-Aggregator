@@ -3,9 +3,10 @@ ApiConnector.py
 @author Christopher Smith
 @description Class to make requests to needed apis (YouTube, GoogleSheets)
 @created 2020-11-15T15:04:31.896Z-08:00
-@last-modified 2020-11-16T12:14:22.273Z-08:00
+@last-modified 2020-11-23T12:09:27.130Z-08:00
 """
 
+import base64
 import json
 from os import getenv
 
@@ -18,13 +19,24 @@ class ApiConnector:
     def __init__(self):
         super(ApiConnector, self).__init__()
         self._key = getenv("GOOGLE_API_KEY")
+        self._creds = getenv("CREDENTIALS_JSON")
         self._base_youtube_url = "https://www.googleapis.com/youtube/v3/videos?id={video_id}&key={key}&part=snippet"
         self._scope = [
             "https://spreadsheets.google.com/feeds",
             "https://www.googleapis.com/auth/drive",
         ]
+
+        base64_creds_bytes = self._creds.encode("ascii")
+        creds_bytes = base64.b64decode(base64_creds_bytes)
+        creds = creds_bytes.decode("ascii")
+        creds = creds.replace("'", '"')
+        cred_dict = json.loads(creds)
+
+        with open("creds.json", "w") as file:
+            json.dump(cred_dict, file)
+
         self._sheets_creds = ServiceAccountCredentials.from_json_keyfile_name(
-            "credentials.json", self._scope
+            "creds.json", self._scope
         )
 
     def say_hello(self):
