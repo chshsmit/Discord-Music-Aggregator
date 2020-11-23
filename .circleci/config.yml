@@ -21,12 +21,7 @@ jobs:
           ssh root@108.61.193.108 << 'ENDSSH'
           docker login --username chshsmit --password $DOCKERHUB_PASSWORD
           docker pull chshsmit/discord-music:latest
-          docker run \
-              --name discord-music \
-              -e DISCORD_TOKEN=$DISCORD_TOKEN \
-              -e DISCORD_GUILD=$DISCORD_GUILD \
-              -e GOOGLE_API_KEY=$GOOGLE_API_KEY \
-              -e CREDENTIALS_JSON=$CREDENTIALS_JSON \
-              -d chshsmit/discord-music:latest \
-
+          docker stop discord-music
+          docker rm discord-music
+          docker run --name discord-music -d chshsmit/discord-music:latest
           ENDSSH
