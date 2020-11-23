@@ -7,4 +7,5 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - run: docker ps
       - run: echo "Building image"
