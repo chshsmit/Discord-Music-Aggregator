@@ -9,3 +9,4 @@ jobs:
       - setup_remote_docker
       - run: ls
       - run: echo "Building image"
+      - run: docker build -t chshsmit/discord-music:latest .

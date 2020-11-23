@@ -8,8 +8,6 @@ RUN pip3 install -r requirements.txt
 WORKDIR /bot
 
 COPY credentials.json .
-COPY .env .
-
 COPY ./src .
 
 
