@@ -15,7 +15,7 @@ jobs:
 
       - run:
         name: List
-        command: ls
+        command: echo "Hello"
 
       # - run:
       #   name: Building Image
